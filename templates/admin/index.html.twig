@@ -1,0 +1,28 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Dashboard{% endblock %}
+
+{% block main %}
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for recipe in recipes %}
+            <div class="bg-white shadow rounded-lg overflow-hidden">
+                <img src="{{ asset(recipe.getDefaultImg()) }}" alt="{{ recipe.getTitle() }}" class="w-full h-48 object-cover">
+                <div class="p-4">
+                    <h2 class="text-xl font-bold">{{ recipe.getTitle() }}</h2>
+                    <hr class="my-2">
+                    <p class="text-sm text-gray-700"><span class="font-bold">Description:</span> {{ recipe.getDescription() }}</p>
+                    <div class="mt-2">
+                        <i class="fa-solid fa-edit"></i>
+                        <a class="text-sm text-gray-700" href="{{ ea_url()
+                            .setController('App\\Controller\\Admin\\RecipeCrudController')
+                            .setAction('edit')
+                            .setEntityId(recipe.getId())
+                        }}">Edit</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
